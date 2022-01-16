@@ -107,7 +107,31 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $persona_data = Persona::findOrFail($id);
+
+        $validator = Validator::make($request->all(),[
+            'alias_name' => ['required','min:3']
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),422);
+        }
+
+        try{
+            $persona_data->update($request->all());
+            $response = [
+                'message' => "Persona updated",
+                'data'=> $persona_data
+            ];
+
+            return response()->json($response, 200);
+
+        } catch(\Exception $e){
+            return response()->json([
+                'message' => 'Failed '. $e->getMessage(),
+
+            ]);
+        }
     }
 
     /**
@@ -118,6 +142,21 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $persona_data = Persona::findOrFail($id);
+
+        try{
+            $persona_data->delete();
+            $response = [
+                'message' => "Persona deleted"
+            ];
+
+            return response()->json($response, 200);
+
+        }catch(\Exception $e){
+            return response()->json([
+                'message' => 'Failed '. $e->getMessage(),
+
+            ]);
+        }
     }
 }

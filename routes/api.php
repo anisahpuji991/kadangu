@@ -41,6 +41,6 @@ Route::delete('/role/{id}','RoleController@destroy');
 Route::get('/personas','PersonaController@index');
 
 Route::post('/persona','PersonaController@store');
-// Route::put('/role/{id}','RoleController@update');
+Route::put('/persona/{id}','PersonaController@update');
 Route::get('/persona/{id}','PersonaController@show');
-// Route::delete('/role/{id}','RoleController@destroy');
+Route::delete('/persona/{id}','PersonaController@destroy');
